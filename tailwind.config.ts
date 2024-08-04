@@ -22,7 +22,15 @@ const config: Config = {
       'green-500': '#243831',
       'success':'#49A569',
       'grey-100':'#BBC2C0',
+      'grey-300':'#939494',
+      'text':'#191919',
+      'black':'#000000',
+      'white':'#FFF',
+      'surface':'#F3F3F3'
     },
+    fontFamily:{
+      'castoro':['Castoro']
+    }
   },
   plugins: [],
 };
