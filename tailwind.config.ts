@@ -1,10 +1,13 @@
 import type { Config } from "tailwindcss";
+const withMT = require("@material-tailwind/react/utils/withMT");
 
-const config: Config = {
+const config: Config = withMT({
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "path-to-your-node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
+    "path-to-your-node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -21,6 +24,7 @@ const config: Config = {
       'green-300': '#2B5F44',
       'green-500': '#243831',
       'success':'#49A569',
+      'grey':'#4A4A4A',
       'grey-100':'#BBC2C0',
       'grey-300':'#939494',
       'text':'#191919',
@@ -33,5 +37,5 @@ const config: Config = {
     }
   },
   plugins: [],
-};
+});
 export default config;
