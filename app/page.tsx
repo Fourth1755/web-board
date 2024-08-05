@@ -93,19 +93,20 @@ export default function Home() {
     setBlogDataShow(result); 
   }
   const changeCommunity = (val = "") => {
-
     setCommunity(val);
   };
+
   useEffect(() => {
     initBlogData();
   }, []);
+
   useEffect(() => {
     if(community!=""){
       filterBlogData();
     }
   }, [community]);
   return (
-    <div className="container mx-auto md:px-32 px-5 pt-10">
+    <div className="container mx-auto md:px-40 px-5 pt-10">
       <div className="flex justify-between grid-cols-3 gap-4">
         <input
           type="text"

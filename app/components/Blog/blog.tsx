@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type BlogData = {
   id: number;
   name: string;
@@ -29,7 +31,9 @@ export default function Blog(prop: PropsBlog) {
         {blog.community}
       </span>
       <div id="content" className="my-3">
-        <h1 className="text-black font-semibold text-lg">{blog.name}</h1>
+        <Link href={`/blog/${blog.id}`}>
+          <h1 className="text-black font-semibold text-lg">{blog.name}</h1>
+        </Link>
         <p className="text-black">{blog.detail}</p>
       </div>
       <button className="text-grey-300">Comments</button>
