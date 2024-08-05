@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import BlogList from "./components/BlogList/blog-list";
+import BlogList from "../components/BlogList/blog-list";
 
 type BlogData = {
   id: number;
@@ -14,7 +14,7 @@ type BlogData = {
   comment: string;
 };
 
-function getBlogs(): BlogData[] {
+function getMyBlogs(): BlogData[] {
   return [
     {
       id: 1,
@@ -42,23 +42,22 @@ function getBlogs(): BlogData[] {
     },
   ];
 }
-
-export default function Home() {
-  const [blogData, setBlogData] = useState<BlogData[]>([]);
-  const initBlogData = () => {
-    try {
-      const result = getBlogs();
-      setBlogData(result);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    initBlogData();
-  }, []);
-  return (
-    <>
-      <BlogList isOurBlog={false} blogList={blogData}/>
-    </>
-  );
+export default function OurBlog(){
+    const [blogData, setBlogData] = useState<BlogData[]>([]);
+    const initBlogData = () => {
+      try {
+        const result = getMyBlogs();
+        setBlogData(result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    useEffect(() => {
+      initBlogData();
+    }, []);
+    return(
+        <>
+            <BlogList isOurBlog={true} blogList={blogData}/>
+        </>
+    )
 }
