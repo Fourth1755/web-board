@@ -16,7 +16,7 @@ export default function Sidebar(props: PropsSidebar) {
     },
     {
       name: "Our Blog",
-      url: "",
+      url: "/our-blog",
       logo: "m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z",
     },
   ];
@@ -30,6 +30,8 @@ export default function Sidebar(props: PropsSidebar) {
     props.onClose();
     setOpen(false);
   };
+
+
   return (
     <>
       <aside
@@ -41,8 +43,8 @@ export default function Sidebar(props: PropsSidebar) {
           <ul className="space-y-2 font-medium">
             {menuSidebar.map((item) => (
               <li key={item.name}>
-                <a
-                  href="#"
+                <Link
+                  href={item.url}
                   className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg
@@ -63,7 +65,7 @@ export default function Sidebar(props: PropsSidebar) {
                   <span className="flex-1 ms-3 whitespace-nowrap text-green-500">
                     {item.name}
                   </span>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -99,8 +101,8 @@ export default function Sidebar(props: PropsSidebar) {
             <ul className="space-y-2 font-medium">
               {menuSidebar.map((item) => (
                 <li key={item.name}>
-                  <a
-                    href="#"
+                  <Link
+                    href={item.url}
                     className="flex items-center p-2 rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >
                     <svg
@@ -121,7 +123,7 @@ export default function Sidebar(props: PropsSidebar) {
                     <span className="flex-1 ms-3 whitespace-nowrap">
                       {item.name}
                     </span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

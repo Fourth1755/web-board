@@ -10,11 +10,25 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+type BlogData = {
+  id: number;
+  name: string;
+  detail: string;
+  community_id: number;
+  community: string;
+  user_id: number;
+  user_name: string;
+  user_image: string;
+  comment: string;
+};
 
 type PropsCreateBlogModal = {
   open: boolean;
-  handler: any;
+  handler: ()=>void;
+  isEdit: boolean;
+  blog?:BlogData
 };
 type Community = {
   id: number;
@@ -22,14 +36,16 @@ type Community = {
 };
 
 type FormData ={
-  title: string;
-  detail: string;
-  community:string
+  title?: string;
+  detail?: string;
+  community?:string
 }
 
 export default function CreateBlogModal(prop: PropsCreateBlogModal) {
   const open = prop.open;
   const handleOpen = prop.handler;
+  const isEdit = prop.isEdit
+  const blogData =prop.blog
   const communityList: Community[] = [
     {
       id: 1,
@@ -69,9 +85,17 @@ export default function CreateBlogModal(prop: PropsCreateBlogModal) {
 
   const handleSubmit=(event: React.FormEvent<HTMLFormElement>)=> {
     event.preventDefault();
+    if(isEdit){
+      //PUT:/blogs
+    }
+    //POST:/blogs
     console.log(formData)
   }
-
+  useEffect(()=>{
+    if(isEdit){
+      setFormData({title:blogData?.name,detail:blogData?.detail,community:blogData?.community})
+    }
+  },[])
   return (
     <>
       <Dialog
@@ -82,7 +106,7 @@ export default function CreateBlogModal(prop: PropsCreateBlogModal) {
           unmount: { scale: 0.9, y: -100 },
         }}
       >
-        <DialogHeader>Create Post</DialogHeader>
+        <DialogHeader>{isEdit?"Edit Post":"Create Post"}</DialogHeader>
         <form onSubmit={handleSubmit}>
           <DialogBody>
             <div className="grid gap-6">
