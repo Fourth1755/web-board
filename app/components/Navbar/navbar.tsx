@@ -13,7 +13,7 @@ export default function Navbar() {
     <>
       {pathname != "/login" ? (
         <>
-          <nav className="bg-green-500 w-auto p-2 flex justify-between">
+          <nav className="bg-green-500 w-full p-2 flex justify-between fixed">
             <div className="flex justify-center w-40">
               <h1 className="my-auto font-castoro italic text-lg">a Borad</h1>
             </div>

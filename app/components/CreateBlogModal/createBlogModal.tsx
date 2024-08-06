@@ -10,6 +10,8 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type BlogData = {
@@ -30,18 +32,30 @@ type PropsCreateBlogModal = {
   isEdit: boolean;
   blog?:BlogData
 };
+
 type Community = {
   id: number;
   name: string;
 };
 
 type FormData ={
-  title?: string;
-  detail?: string;
-  community?:string
+  title: string;
+  detail: string;
+  community:string
+}
+
+async function createBlog(blog:BlogData) {
+  const response = await axios.post(`http://localhost:8080/blogs`,blog)
+  return Response.json(response)
+}
+
+async function updateBlog(blog:BlogData,id:number) {
+  const response =axios.patch(`http://localhost:8080/blogs/${id}`,blog)
+  return Response.json(response)
 }
 
 export default function CreateBlogModal(prop: PropsCreateBlogModal) {
+  const router = useRouter()
   const open = prop.open;
   const handleOpen = prop.handler;
   const isEdit = prop.isEdit
@@ -72,7 +86,11 @@ export default function CreateBlogModal(prop: PropsCreateBlogModal) {
       name: "Others",
     },
   ];
-
+  const user={
+    id:1,
+    name:"Alisa Mikhailovna",
+    image:"https://cdn.myanimelist.net/images/characters/5/536830.jpg",
+  }
   const [formData, setFormData] = useState<FormData>({ title: "", detail: "",community:"" });
 
   const handleInputChange=(event: React.ChangeEvent<HTMLInputElement>|any)=> {
@@ -83,17 +101,33 @@ export default function CreateBlogModal(prop: PropsCreateBlogModal) {
     setFormData({ ...formData, "community": val });
   };
 
-  const handleSubmit=(event: React.FormEvent<HTMLFormElement>)=> {
+  const handleSubmit=async(event: React.FormEvent<HTMLFormElement>)=> {
     event.preventDefault();
-    if(isEdit){
-      //PUT:/blogs
+    const blog:BlogData = {
+      id:0,
+      name:formData.title,
+      detail:formData.detail,
+      community_id:0,
+      community:formData.community,
+      user_id:user.id,
+      user_name:user.name,
+      user_image:user.image,
+      comment:""
     }
-    //POST:/blogs
-    console.log(formData)
+    if(isEdit&&blogData){
+      //PATCH:/blogs
+      blog.id=blogData.id
+      await updateBlog(blog,blogData.id)
+    }else{
+      //POST:/blogs
+      await createBlog(blog)
+    }
+    handleOpen()
+    router.push('/')
   }
   useEffect(()=>{
-    if(isEdit){
-      setFormData({title:blogData?.name,detail:blogData?.detail,community:blogData?.community})
+    if(isEdit&&blogData){
+      setFormData({title:blogData.name,detail:blogData.detail,community:blogData.community})
     }
   },[])
   return (

@@ -1,7 +1,22 @@
 "use client";
-import { Input } from "@material-tailwind/react";
+import { Alert, Input } from "@material-tailwind/react";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
+import axios from "axios";
+import Swal from "sweetalert2";
+import { error } from "console";
+
+async function login(username:string) {
+  const response = await axios.post(`http://localhost:8080/auth/login`,{username})
+  .catch((error)=>{
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Username is incroect!",
+    });
+  })
+  return Response.json(response)
+}
 
 export default function Page() {
   const [username, setUsername] = useState("");
@@ -11,11 +26,12 @@ export default function Page() {
     setUsername(value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     //POST:/login
-    console.log(username);
+    const response = await login(username)
     router.push('/')
+
   };
   return (
     <div className="flex md:flex-row flex-col-reverse bg-green-500 h-screen">
