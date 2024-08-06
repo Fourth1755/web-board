@@ -77,10 +77,9 @@ export default function BlogList(prop: PropBlogList) {
   }, [blogData]);
   const [openModal, setOpenModal] = useState(false);
   const handleOpen = () => setOpenModal(!openModal);
-
   return (
     <>
-      <div className="container mx-auto md:px-40 px-5 pt-10">
+      <div className="container mx-auto md:px-40 px-5 pt-20">
         <div className="flex justify-between grid-cols-3 gap-4">
           <input
             type="text"

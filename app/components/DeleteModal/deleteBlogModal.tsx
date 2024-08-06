@@ -1,15 +1,28 @@
 "use client";
 import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from "@material-tailwind/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type PropsDeleteBlogModal = {
   open: boolean;
   handler: () => void;
-  blogId?: number;
+  blogId: number;
 };
 
+async function deleteBlog(id:number) {
+  const response =axios.delete(`http://localhost:8080/blogs/${id}`)
+  return Response.json(response)
+}
+
 export default function DeleteBlogModal(prop: PropsDeleteBlogModal) {
+  const router = useRouter()
   const open = prop.open;
   const handleOpen = prop.handler;
+  const blogId = prop.blogId;
+  const handleDelete =async()=>{
+    await deleteBlog(blogId)
+    router.push('/')
+  }
   return (
     <>
       <Dialog
@@ -34,7 +47,7 @@ export default function DeleteBlogModal(prop: PropsDeleteBlogModal) {
             >
               <span>Cancel</span>
             </Button>
-            <Button variant="gradient" color="red" type="submit">
+            <Button variant="gradient" color="red" onClick={handleDelete}>
               <span>Delete</span>
             </Button>
           </DialogFooter>
